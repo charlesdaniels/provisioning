@@ -1,0 +1,10 @@
+{
+    "provides": "provision-linux-core",
+    "manifest": [],
+    "require-task": [
+        "require-linux",
+        "install-minos-static",
+        "provision-unix-core",
+        "apply-altera-usbblaster-udev"
+    ]
+}

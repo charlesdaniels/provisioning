@@ -1,0 +1,12 @@
+{
+    "provides": "provision-archlinux-core",
+    "manifest": [],
+    "require-task": [
+        "require-archlinux",
+        "provision-linux-core",
+        "archlinux-update",
+        "archlinux-update-aurman",
+        "archlinux-install-utils",
+        "archlinux-install-devel"
+    ]
+}

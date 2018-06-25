@@ -1,0 +1,12 @@
+*.swp
+*.swo
+git-completion
+log
+3rdparty/st/config.h
+3rdparty/st/st
+3rdparty/st/st.o
+3rdparty/moss
+tasks/*/.gitignore
+doc/source/tasks
+doc/source/_static/*overview*.svg
+doc/build

@@ -1,0 +1,5 @@
+{
+    "provides": "require-archlinux",
+    "manifest": [],
+    "require-file": ["/etc/arch-release"]
+}

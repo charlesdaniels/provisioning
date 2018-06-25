@@ -1,0 +1,11 @@
+{
+    "provides": "provision-unix-core",
+    "manifest": [],
+    "require-task": [
+        "require-unix",
+        "install-qstats",
+        "install-latexrun",
+        "install-herc-tools-public",
+        "install-list-desktop-files"
+    ]
+}
