@@ -5,7 +5,7 @@
         "install-zsh-k",
         "install-zsh-abbr-path",
         "install-zsh-fast-syntax-highlighting",
-        "install-zsh-autosuggestions"
-    ],
-    "copy-file": [[".zshrc", "{HOME}/.zshrc"]]
+        "install-zsh-autosuggestions",
+        "install-dotfiles"
+    ]
 }
