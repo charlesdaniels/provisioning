@@ -2,13 +2,12 @@
 The Dotfiles of Charles Daniels
 ###############################
 
-.. image:: https://readthedocs.org/projects/charlesdaniels-dotfiles/badge/?version=latest
-    :target: http://charlesdaniels-dotfiles.readthedocs.io/en/latest/?badge=latest
+.. image:: //readthedocs.org/projects/provisioning/badge/?version=latest
+    :target: https://provisioning.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation Status
 
-.. image:: https://travis-ci.org/charlesdaniels/dotfiles.svg?branch=master
-    :target: https://travis-ci.org/charlesdaniels/dotfiles
-
+.. image:: https://travis-ci.org/charlesdaniels/provisioning.svg?branch=master
+    :target: https://travis-ci.org/charlesdaniels/provisioning
 
 .. contents::
 
