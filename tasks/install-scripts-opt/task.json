@@ -6,6 +6,7 @@
     "run-script": [
         ["sh", "-c", "echo $TASKUTIL_SUDO_PASSWORD | sudo -S mkdir -p /opt/net.cdaniels/bin"],
         ["sh", "-c", "echo $TASKUTIL_SUDO_PASSWORD | sudo -S cp $TASKUTIL_TASK_DIR/bin/system-reset-xhci /opt/net.cdaniels/bin"],
-        ["sh", "-c", "echo $TASKUTIL_SUDO_PASSWORD | sudo -S cp $TASKUTIL_TASK_DIR/bin/system-lock /opt/net.cdaniels/bin"]
+        ["sh", "-c", "echo $TASKUTIL_SUDO_PASSWORD | sudo -S cp $TASKUTIL_TASK_DIR/bin/system-lock /opt/net.cdaniels/bin"],
+        ["sh", "-c", "echo $TASKUTIL_SUDO_PASSWORD | sudo -S cp $TASKUTIL_TASK_DIR/bin/system-configure-iptables /opt/net.cdaniels/bin"]
     ]
 }

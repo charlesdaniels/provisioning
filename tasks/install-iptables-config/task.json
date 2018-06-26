@@ -1,0 +1,12 @@
+{
+    "provides": "install-iptables-config",
+    "manifest": ["iptables_config.service", "iptables_config.timer"],
+    "require-sudo": true,
+    "require-task": ["require-systemd", "require-linux", "install-scripts-opt"],
+    "run-script": [
+        ["sh", "-c", "echo $TASKUTIL_SUDO_PASSWORD | sudo -S cp $TASKUTIL_TASK_DIR/iptables_config.service /etc/systemd/system/iptables_config.service"],
+        ["sh", "-c", "echo $TASKUTIL_SUDO_PASSWORD | sudo -S cp $TASKUTIL_TASK_DIR/iptables_config.timer /etc/systemd/system/iptables_config.timer"],
+        ["sh", "-c", "echo $TASKUTIL_SUDO_PASSWORD | sudo -S systemctl enable iptables_config.timer"],
+        ["sh", "-c", "echo $TASKUTIL_SUDO_PASSWORD | sudo -S systemctl start iptables_config.timer"]
+    ]
+}

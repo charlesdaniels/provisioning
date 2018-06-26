@@ -5,6 +5,7 @@
     "require-task": [
         "require-archlinux",
         "archlinux-update-aurman",
+        "install-iptables-config",
         "archlinux-install-aurman"],
     "run-script": [
         ["sh", "-c", "echo $TASKUTIL_SUDO_PASSWORD | sudo -S date"],

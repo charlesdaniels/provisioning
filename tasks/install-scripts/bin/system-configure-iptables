@@ -1,0 +1,58 @@
+#!/bin/bash
+
+# originally sourced from here:
+# https://bbs.archlinux.org/viewtopic.php?id=14232
+
+# this script configures iptables to not be stupid; among other things it makes
+# printing to network printers work, and allows ssh and a few other ports
+# through the firewall. This is necessary in order to co-exist with firewalld,
+# which is needed for KVM VMs to use NAT.
+
+iptables -F
+iptables -X
+# By default, allow all outbound requests.
+iptables -P OUTPUT  ACCEPT
+
+# By default, deny all inbound requests.
+iptables -P INPUT   DROP
+
+# Be default, do not allow forwarding.
+iptables -P FORWARD DROP
+
+# Allow all localhost connections.
+iptables -A INPUT  -i lo  -j ACCEPT
+
+# Allow inbound ssh connections.
+iptables -A INPUT  -p tcp  --destination-port 22  -m state --state NEW  -j ACCEPT
+
+# Allow all inbound http requests.
+iptables -A INPUT  -p tcp  --destination-port 80  -m state --state NEW  -j ACCEPT
+iptables -A INPUT  -p tcp  --destination-port 8000  -m state --state NEW  -j ACCEPT
+iptables -A INPUT  -p tcp  --destination-port 8080  -m state --state NEW  -j ACCEPT
+
+# Allow all inbound cups requests.
+iptables -A INPUT  -p tcp  --destination-port 631  -m state --state NEW  -j ACCEPT
+iptables -A INPUT  -p udp  --destination-port 631  -m state --state NEW  -j ACCEPT
+iptables -A INPUT  -p icmp --icmp-type echo-request  -j ACCEPT
+iptables -A INPUT  -p icmp --icmp-type echo-reply  -j ACCEPT
+iptables -A INPUT  -p icmp --icmp-type destination-unreachable  -j ACCEPT
+iptables -A INPUT  -p icmp --icmp-type source-quench -j ACCEPT
+iptables -A INPUT  -p icmp --icmp-type time-exceeded -j ACCEPT
+iptables -A INPUT  -p icmp --icmp-type parameter-problem -j ACCEPT
+
+# others CUPS stuff probably
+iptables -A INPUT  -p tcp  --destination-port 161 -m state --state NEW  -j ACCEPT
+iptables -A INPUT  -p udp  --destination-port 161 -m state --state NEW  -j ACCEPT
+iptables -A INPUT  -p tcp  --destination-port 515 -m state --state NEW  -j ACCEPT
+iptables -A INPUT  -p udp  --destination-port 515 -m state --state NEW  -j ACCEPT
+iptables -A INPUT  -p tcp  --destination-port 9100 -m state --state NEW  -j ACCEPT
+iptables -A INPUT  -p udp  --destination-port 9100 -m state --state NEW  -j ACCEPT
+iptables -A INPUT  -p tcp  --destination-port 9101 -m state --state NEW  -j ACCEPT
+iptables -A INPUT  -p udp  --destination-port 9101 -m state --state NEW  -j ACCEPT
+iptables -A INPUT  -p tcp  --destination-port 9102 -m state --state NEW  -j ACCEPT
+iptables -A INPUT  -p udp  --destination-port 9102 -m state --state NEW  -j ACCEPT
+iptables -A INPUT  -p tcp  --destination-port 5353 -m state --state NEW  -j ACCEPT
+iptables -A INPUT  -p udp  --destination-port 5353 -m state --state NEW  -j ACCEPT
+
+# Maps the outbound requests with the inbound requests.
+iptables -A INPUT  -m state --state ESTABLISHED,RELATED -j ACCEPT
