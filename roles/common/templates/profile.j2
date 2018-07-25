@@ -1,0 +1,44 @@
+# University of South Carolina - HeRC Lab - Recommended sh profile for
+# Ubuntu 16.04 Xenial Workstations and Servers
+
+# Maintainer Information:
+#   Active Maintainer: Charles Daniels - cdaniels@fastmail.com
+#   Alternate Contact: Viraj Patel     - virajpatel20@gmail.com
+#     Faculty Contact: Jason Bakos     - jbakos@mailbox.sc.edu
+#
+#   Please email any improvements to the active maintainer!
+#
+# Notes:
+#   At present, this is just the default Ubuntu profile, but we track this in
+#   our official configs in case we need to change it some day.
+#
+# Update History:
+#   2017-01-17 - Charles Daniels - initial version
+
+if [ "$PS1" ]; then
+  if [ "$BASH" ] && [ "$BASH" != "/bin/sh" ]; then
+    # The file bash.bashrc already sets the default PS1.
+    # PS1='\h:\w\$ '
+    if [ -f /etc/bash.bashrc ]; then
+      . /etc/bash.bashrc
+    fi
+  else
+    if [ "`id -u`" -eq 0 ]; then
+      PS1='# '
+    else
+      PS1='$ '
+    fi
+  fi
+fi
+
+if [ -d /etc/profile.d ]; then
+  for i in /etc/profile.d/*.sh; do
+    if [ -r $i ]; then
+      . $i
+    fi
+  done
+  unset i
+fi
+
+export PATH=$PATH:/opt/edu.sc.cse.herc/net.cdaniels.toolchest/bin
+export PATH=$PATH:/opt/edu.sc.cse.herc/net.cdaniels.toolchest/local/bin

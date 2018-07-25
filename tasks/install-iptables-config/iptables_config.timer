@@ -1,9 +1,0 @@
-[Unit]
-Description=configure iptables one minute after boot
-
-[Timer]
-OnBootSec=1min
-Unit=iptables_config.service
-
-[Install]
-WantedBy=multi-user.target

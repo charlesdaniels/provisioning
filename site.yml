@@ -1,0 +1,33 @@
+---
+
+
+- name: common
+  tags: common
+  hosts: all localhost
+  roles:
+      - role: common
+
+- name: workstation
+  tags: workstation
+  hosts: all localhost
+  roles:
+      - role: common
+      - role: workstation
+
+- name: laptop
+  tags: laptop
+  hosts: all localhost
+  roles:
+      - role: common
+      - role: workstation
+      - role: laptop
+
+- name: x220
+  tags: x220
+  hosts: all localhost
+  roles:
+      - role: common
+      - role: workstation
+      - role: laptop
+      - role: x220
+

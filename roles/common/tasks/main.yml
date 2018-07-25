@@ -1,0 +1,124 @@
+---
+- name: CLI tools
+  apt: pkg={{ item }} state=latest
+  with_items:
+      - vim
+      - zsh
+      - python
+      - python-pip
+      - python3
+      - python3-pip
+      - htop
+      - tmux
+      - slurm
+      - nload
+      - nmap
+      - netcat
+      - iotop
+      - bash
+      - build-essential
+      - git
+      - tree
+      - imagemagick
+      - youtube-dl
+      - lm-sensors
+      - texlive
+      - python3-sphinx
+      - curl
+
+  become: yes
+  become_user: root
+  become_method: sudo
+
+- name: System Services and Drivers
+  apt: pkg={{ item }} state=latest
+  with_items:
+      - snapd
+      - bluez
+
+  become: yes
+  become_user: root
+  become_method: sudo
+
+- name: Libraries
+  apt: pkg={{ item }} state=latest
+  with_items:
+      - python3-yaml
+      - python-psutil
+      - python3-psutil
+      - python3-numpy
+      - python3-scipy
+      - python3-matplotlib
+      - python3-recommonmark
+      - python3-tabulate
+      - python3-humanize
+      - python3-taglib
+      - libgit2-dev
+      - libssh2-1-dev
+      - libssl-dev
+
+  become: yes
+  become_user: root
+  become_method: sudo
+
+- name: Install Rust
+  shell: 'if [ ! -x "$(which cargo)" ] ; then curl https://sh.rustup.rs -sSf | sh -s -- -y ; fi'
+  warn: False
+
+- name: rustup update
+  command: rustup update
+
+# Note that cargo install will error if the target is already installed, hence
+# the checks.
+- name: Install Cargo Crates
+  shell: 'if ! cargo install --list | grep {{ item }} ; then cargo install {{ item }} ; fi'
+  with_items:
+      - cargo-update
+      - exa
+      - ripgrep
+
+- name: Ensure Repos Directory Exists
+  file: path={{ ansible_env.HOME}}/.local/share/setupsoftware state=directory
+
+- name: Clone dotfiles
+  git:
+    repo: 'git://github.com/charlesdaniels/dotfiles.git'
+    dest: '{{ ansible_env.HOME}}/.local/share/setupsoftware/dotfiles'
+    update: yes
+    clone: yes
+    recursive: yes
+    version: next
+
+- name: Clone charles-util
+  git:
+    repo: 'git://github.com/charlesdaniels/charles-util.git'
+    dest: '{{ ansible_env.HOME}}/.local/share/setupsoftware/charles-util'
+    update: yes
+    clone: yes
+    recursive: yes
+
+- name: Clone herc-tools-public
+  git:
+    repo: 'git://github.com/HeRCLab/herc-tools-public.git'
+    dest: '{{ ansible_env.HOME}}/.local/share/setupsoftware/herc-tools-public'
+    update: yes
+    clone: yes
+    recursive: yes
+
+- name: Install dotfiles
+  command: sh install.sh
+  args:
+    chdir: '{{ ansible_env.HOME}}/.local/share/setupsoftware/dotfiles'
+
+
+- name: Install charles-util
+  command: make install
+  args:
+    chdir: '{{ ansible_env.HOME}}/.local/share/setupsoftware/charles-util'
+
+- name: Install herc-tools-public
+  command: make install
+  args:
+    chdir: '{{ ansible_env.HOME}}/.local/share/setupsoftware/herc-tools-public'
+
+

@@ -1,8 +1,0 @@
-{
-    "provides": "install-dotfiles",
-    "manifest": [],
-    "require-github": [["charlesdaniels/dotfiles", "dotfiles", "next"]],
-    "run-script": [
-        ["sh", "dotfiles/install.sh"]
-    ]
-}

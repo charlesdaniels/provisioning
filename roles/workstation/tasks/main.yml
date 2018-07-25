@@ -1,0 +1,99 @@
+---
+- name: Install Xorg & DEs
+  apt: pkg={{ item }} state=latest
+  with_items:
+      - xorg
+      - xinit
+      - i3
+      - slim
+  notify: enable slim
+  become: yes
+  become_user: root
+  become_method: sudo
+
+- name: Install X-Related Utilities
+  apt: pkg={{ item }} state=latest
+  with_items:
+      - pcmanfm
+      - atril
+      - firefox-esr
+      - rofi
+      - pavucontrol
+      - pasystray
+      - redshift-gtk
+      - synapse
+      - feh
+      - compton
+      - pulseaudio
+      - compton
+      - mpv
+      - xautolock
+      - scrot
+      - blueman
+      - pulseaudio-module-bluetooth
+      - geeqie
+      - vim-gtk3
+      - thunderbird
+
+  become: yes
+  become_user: root
+  become_method: sudo
+
+- name: Install MPD
+  notify: enable mpd
+  become: yes
+  become_user: root
+  become_method: sudo
+  apt: pkg={{ item }} state=latest
+  with_items:
+      - mpd
+      - mpc
+      - cantata
+
+- name: Setup MPD Service
+  shell: "systemctl enable --user mpd.service && systemctl start --user mpd.service"
+
+- name: Install Cargo Crates
+  shell: 'if [ ! -x "$(which {{ item }})" ] ; then cargo install {{ item }} ; fi'
+  with_items:
+      - alacritty
+
+- name: Update Cargo Crates
+  command: cargo install-update -a
+
+- name: Ensure home bin Exists
+  file: path={{ ansible_env.HOME }}/bin state=directory
+
+- name: Install System Scripts
+  copy: src={{ role_path }}/templates/scripts/{{ item }} dest={{ ansible_env.HOME}}/bin/{{ item }} mode=a+x
+  with_items:
+    - system-configure-iptables
+    - system-launch-compositor
+    - system-lock
+    - system-reset-xhci
+    - system-screenshot
+    - system-statusline
+
+- name: Ensure opt bin directory exists
+  file: path=/opt/net.cdaniels/bin state=directory
+  become: yes
+  become_user: root
+  become_method: sudo
+
+- name: Install System Scripts to opt
+  copy: src={{ role_path }}/templates/scripts/{{ item }} dest=/opt/net.cdaniels/bin/{{ item }} mode=a+x
+  with_items:
+      - system-reset-xhci
+      - system-lock
+      - system-configure-iptables
+  become: yes
+  become_user: root
+  become_method: sudo
+
+- name: Enable Services
+  service: name={{ item }}.service enabled=yes
+  become: yes
+  become_user: root
+  become_method: sudo
+  with_items:
+      - bluetooth

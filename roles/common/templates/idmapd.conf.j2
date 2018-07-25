@@ -1,0 +1,27 @@
+# University of South Carolina - HeRC Lab - Recommended idmapd config for
+# Ubuntu 16.04 Xenial Workstations and Servers 
+
+# Maintainer Information:
+#   Active Maintainer: Charles Daniels - cdaniels@fastmail.com
+#   Alternate Contact: Viraj Patel     - virajpatel20@gmail.com
+#     Faculty Contact: Jason Bakos     - jbakos@mailbox.sc.edu
+#   
+#   Please email any improvements to the active maintainer! 
+#
+# Notes:
+#   This sets the domain and translation method correctly for NFSv4. 
+#
+# Update History: 
+#   2017-01-17 - Charles Daniels - initial version
+
+[General]
+Verbosity = 0
+Pipefs-Directory = /run/rpc_pipefs
+Domain = cse.sc.edu
+
+[Mapping]
+Nobody-User = nobody
+Nobody-Group = nogroup
+
+[Translation]
+Method=nsswitch
