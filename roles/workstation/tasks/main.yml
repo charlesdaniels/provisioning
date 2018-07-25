@@ -97,3 +97,9 @@
   become_method: sudo
   with_items:
       - bluetooth
+
+- name: Download CybeChef
+  get_url:
+      url: https://gchq.github.io/CyberChef/cyberchef.htm
+      dest: "{{ ansible_env.HOME}}/.local/share/setupsoftware/cyberchef.htm"
+      mode: 0644
