@@ -43,6 +43,8 @@
       - texlive
       - python3-sphinx
       - curl
+      - pkg-config
+      - cmake
 
   become: yes
   become_user: root
@@ -74,6 +76,7 @@
       - libgit2-dev
       - libssh2-1-dev
       - libssl-dev
+      - openssl
 
   become: yes
   become_user: root
