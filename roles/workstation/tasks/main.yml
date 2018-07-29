@@ -42,7 +42,7 @@
   become_method: sudo
 
 - name: Enable dbus
-  service: dbus state=started enabled=yes
+  service: name=dbus state=started enabled=yes
   become: yes
   become_user: root
   become_method: sudo
