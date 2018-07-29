@@ -84,20 +84,16 @@
   warn: False
 
 - name: rustup update
-  command: rustup update
-  environment:
-       PATH:$PATH:{{ ansible_env.HOME }}/.cargo/bin
+  command: {{ ansible_env.HOME }}/.cargo/bin/rustup update
 
 # Note that cargo install will error if the target is already installed, hence
 # the checks.
 - name: Install Cargo Crates
-  shell: 'if ! cargo install --list | grep {{ item }} ; then cargo install {{ item }} ; fi'
+  shell: 'if ! {{ ansible_env.HOME }}/.cargo/bin/cargo install --list | grep {{ item }} ; then {{ ansible_env.HOME }}/.cargo/bin/cargo install {{ item }} ; fi'
   with_items:
       - cargo-update
       - exa
       - ripgrep
-  environment:
-       PATH:$PATH:{{ ansible_env.HOME }}/.cargo/bin
 
 - name: Ensure Repos Directory Exists
   file: path={{ ansible_env.HOME}}/.local/share/setupsoftware state=directory
