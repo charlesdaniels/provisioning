@@ -50,6 +50,7 @@
     update: yes
     clone: yes
     recursive: yes
+    version: v1.4.18
   become_user: root
   become_method: sudo
   become: yes
@@ -69,8 +70,7 @@
   become_user: root
   become_method: sudo
   become: yes
-  shell: "cp /root/sanoid/{{ item }} /usr/bin/{{ item }}"
-  creates: "/usr/bin/{{ item }}"
+  shell: "cp /root/sanoid/{{ item }} /usr/sbin/{{ item }}"
   # copy:
   #     src: "/root/sanoid/{{ item }}"
   #     dest: "/usr/local/bin/{{ item }}"
@@ -92,13 +92,12 @@
   #     src: "/root/sanoid/sanoid.defaults.conf"
   #     dest: "/etc/sanoid/sanoid.defaults.conf"
   #     mode: 0644
-  creates: "/etc/sanoid/sanoid.defaults.conf"
   become_user: root
   become_method: sudo
   become: yes
 
 - name: Install Sanoid Services
-  shell: "cp /root/sanoid/packages/debian/{{ item }} /etc/systemd/system/{{ item }}"
+  shell: "cp /root/sanoid/debian/{{ item }} /etc/systemd/system/{{ item }}"
   creates: "/etc/systemd/system/{{ item }}"
   # copy:
   #     src: "/root/sanoid/packages/debian/{{ item }}"
