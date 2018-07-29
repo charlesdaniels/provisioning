@@ -98,7 +98,6 @@
 
 - name: Install Sanoid Services
   shell: "cp /root/sanoid/debian/{{ item }} /etc/systemd/system/{{ item }}"
-  creates: "/etc/systemd/system/{{ item }}"
   # copy:
   #     src: "/root/sanoid/packages/debian/{{ item }}"
   #     dest: "/etc/systemd/system/{{ item }}"
