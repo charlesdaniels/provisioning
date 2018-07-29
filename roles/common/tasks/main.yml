@@ -1,4 +1,22 @@
 ---
+- name: Install sources.list
+  template:
+      src: sources.list
+      dest: /etc/apt/sources.list
+      mode: 0644
+  become_user: root
+  become_method: sudo
+  become: yes
+
+- name: Update and upgrade apt packages
+  apt:
+    upgrade: yes
+    update_cache: yes
+  become_user: root
+  become_method: sudo
+  become: yes
+
+
 - name: CLI tools
   apt: pkg={{ item }} state=latest
   with_items:

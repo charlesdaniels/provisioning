@@ -14,6 +14,21 @@
       - role: common
       - role: workstation
 
+- name: zfs-server
+  tags: zfs-server
+  hosts: all localhost
+  roles:
+      - role: common
+      - role: zfs
+
+- name: zfs-workstation
+  tags: zfs-workstation
+  hosts: all localhost
+  roles:
+      - role: common
+      - role: workstation
+      - role: zfs
+
 - name: laptop
   tags: laptop
   hosts: all localhost
@@ -21,6 +36,15 @@
       - role: common
       - role: workstation
       - role: laptop
+
+- name: zfs-laptop
+  tags: zfs-laptop
+  hosts: all localhost
+  roles:
+      - role: common
+      - role: workstation
+      - role: laptop
+      - role: zfs
 
 - name: x220
   tags: x220
@@ -30,4 +54,5 @@
       - role: workstation
       - role: laptop
       - role: x220
+      - role: zfs
 
