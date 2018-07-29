@@ -81,10 +81,9 @@
 
 - name: Install Rust
   shell: 'if [ ! -x "$(which cargo)" ] ; then curl https://sh.rustup.rs -sSf | sh -s -- -y ; fi'
-  warn: False
 
 - name: rustup update
-  command: {{ ansible_env.HOME }}/.cargo/bin/rustup update
+  shell: "{{ ansible_env.HOME }}/.cargo/bin/rustup update"
 
 # Note that cargo install will error if the target is already installed, hence
 # the checks.
