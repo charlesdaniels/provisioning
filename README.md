@@ -1,5 +1,7 @@
 # Provisioning Scripts
 
+[![Build Status](https://travis-ci.org/charlesdaniels/provisioning.svg?branch=master)](https://travis-ci.org/charlesdaniels/provisioning)
+
 This is a collection of Ansible roles to set up machines for my personal use.
 
 This playbook targets Debian Stable (currently Debian 9, Jessie). Some
