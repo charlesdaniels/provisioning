@@ -36,6 +36,7 @@
       - vim-gtk3
       - thunderbird
       - dbus
+      - mate-calc
 
   become: yes
   become_user: root

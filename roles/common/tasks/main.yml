@@ -45,6 +45,8 @@
       - curl
       - pkg-config
       - cmake
+      - surfraw
+      - links2
 
   become: yes
   become_user: root
