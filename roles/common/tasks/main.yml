@@ -127,6 +127,15 @@
     clone: yes
     recursive: yes
 
+- name: Clone Pcalc
+  git:
+    repo: 'git://github.com/vapier/pcalc.git'
+    dest: '{{ ansible_env.HOME}}/.local/share/setupsoftware/pcalc'
+    update: yes
+    clone: yes
+    recursive: yes
+    version: v4
+
 - name: Install dotfiles
   command: sh install.sh
   args:
@@ -143,4 +152,18 @@
   args:
     chdir: '{{ ansible_env.HOME}}/.local/share/setupsoftware/herc-tools-public'
 
+- name: Build Pcalc
+  command: make
+  args:
+    chdir: '{{ ansible_env.HOME}}/.local/share/setupsoftware/pcalc'
+  become: yes
+  become_user: root
+  become_method: sudo
 
+- name: Install Pcalc
+  command: make install
+  args:
+    chdir: '{{ ansible_env.HOME}}/.local/share/setupsoftware/pcalc'
+  become: yes
+  become_user: root
+  become_method: sudo
