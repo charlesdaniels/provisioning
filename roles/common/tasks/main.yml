@@ -142,10 +142,7 @@
     version: v4
 
 - name: Install dotfiles
-  shell: "./install.sh"
-  args:
-    chdir: '{{ ansible_env.HOME}}/.local/share/setupsoftware/dotfiles'
-
+  shell: "{{ ansible_env.HOME}}/.local/share/setupsoftware/dotfiles/install.sh"
 
 - name: Install charles-util
   command: make install
