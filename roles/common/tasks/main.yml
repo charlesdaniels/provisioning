@@ -98,6 +98,7 @@
       - cargo-update
       - exa
       - ripgrep
+      - fd-find
 
 - name: Ensure Repos Directory Exists
   file: path={{ ansible_env.HOME}}/.local/share/setupsoftware state=directory
