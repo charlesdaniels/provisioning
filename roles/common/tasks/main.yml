@@ -99,6 +99,10 @@
       - exa
       - ripgrep
       - fd-find
+      - fcat
+      - tin-summer
+      - tokei
+      - xsv
 
 - name: Ensure Repos Directory Exists
   file: path={{ ansible_env.HOME}}/.local/share/setupsoftware state=directory
@@ -138,7 +142,7 @@
     version: v4
 
 - name: Install dotfiles
-  command: sh install.sh
+  shell: "./install.sh"
   args:
     chdir: '{{ ansible_env.HOME}}/.local/share/setupsoftware/dotfiles'
 
