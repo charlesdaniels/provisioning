@@ -17,7 +17,6 @@
   with_items:
       - pcmanfm
       - atril
-      - firefox-esr
       - rofi
       - pavucontrol
       - pasystray
@@ -112,3 +111,15 @@
       url: https://gchq.github.io/CyberChef/cyberchef.htm
       dest: "{{ ansible_env.HOME}}/.local/share/setupsoftware/cyberchef.htm"
       mode: 0644
+
+- name: Install Snaps
+  command: snap install {{ item }}
+  with_items:
+      - chromium
+      - firefox
+  become: yes
+  become_user: root
+  become_method: sudo
+
+- name: Ensure Firefox Config Directory Exists
+  file: path="{{ ansible_env.HOME }}/snap/firefox/common/.config/user-dirs.dirs" state=directory
