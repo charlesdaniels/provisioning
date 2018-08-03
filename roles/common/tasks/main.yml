@@ -84,6 +84,14 @@
   become_user: root
   become_method: sudo
 
+- name: Install Snaps
+  command: snap install {{ item }}
+  with_items:
+      - powershell --classic
+  become: yes
+  become_user: root
+  become_method: sudo
+
 - name: Install Rust
   shell: 'if [ ! -x "$(which cargo)" ] ; then curl https://sh.rustup.rs -sSf | sh -s -- -y ; fi'
 
