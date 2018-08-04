@@ -16,6 +16,22 @@
   become_method: sudo
   become: yes
 
+- name: Add PowerShell Apt Key
+  apt_key:
+      url: "https://packages.microsoft.com/keys/microsoft.asc"
+      state: "present"
+  become: yes
+  become_user: root
+  become_method: sudo
+
+- name: Add PowerShell Repository
+  apt_repository:
+      repo: "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-debian-stretch-prod stretch main"
+      state: present
+      update_cache: true
+  become: yes
+  become_user: root
+  become_method: sudo
 
 - name: CLI tools
   apt: pkg={{ item }} state=latest
@@ -50,6 +66,7 @@
       - bison
       - flex
       - sshfs
+      - powershell
 
   become: yes
   become_user: root
@@ -92,13 +109,6 @@
   become_user: root
   become_method: sudo
 
-- name: Install Snaps
-  command: snap install {{ item }}
-  with_items:
-      - powershell --classic
-  become: yes
-  become_user: root
-  become_method: sudo
 
 - name: Install Rust
   shell: 'if [ ! -x "$(which cargo)" ] ; then curl https://sh.rustup.rs -sSf | sh -s -- -y ; fi'
