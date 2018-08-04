@@ -55,18 +55,17 @@
   become_user: root
   become_method: sudo
 
-- name: Enable snapd
-  service: name=snapd state=started enabled=yes
-  become: yes
-  become_user: root
-  become_method: sudo
-
 - name: System Services and Drivers
   apt: pkg={{ item }} state=latest
   with_items:
       - snapd
       - bluez
+  become: yes
+  become_user: root
+  become_method: sudo
 
+- name: Enable snapd
+  service: name=snapd state=started enabled=yes
   become: yes
   become_user: root
   become_method: sudo
