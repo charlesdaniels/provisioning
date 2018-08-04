@@ -40,6 +40,7 @@
       - network-manager-gnome
       - arandr
       - firefox-esr
+      - rxvt-unicode
 
   become: yes
   become_user: root
@@ -70,7 +71,6 @@
 
 - name: Setup MPD Service
   shell: "systemctl enable --user mpd.service && systemctl start --user mpd.service"
-
 
 - name: Ensure home bin Exists
   file: path={{ ansible_env.HOME }}/bin state=directory
