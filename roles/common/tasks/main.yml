@@ -151,7 +151,8 @@
     version: v4
 
 - name: Install dotfiles
-  shell: "{{ ansible_env.HOME}}/.local/share/setupsoftware/dotfiles/install.sh"
+  shell: "sh {{ ansible_env.HOME}}/.local/share/setupsoftware/dotfiles/install.sh"
+  ignore_errors: yes
 
 - name: Install charles-util
   command: make install
