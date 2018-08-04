@@ -36,6 +36,9 @@
       - thunderbird
       - dbus
       - mate-calc
+      - network-manager
+      - network-manager-gnome
+      - arandr
 
   become: yes
   become_user: root
@@ -43,6 +46,12 @@
 
 - name: Enable dbus
   service: name=dbus state=started enabled=yes
+  become: yes
+  become_user: root
+  become_method: sudo
+
+- name: Enable network-manager
+  service: name=network-manager state=started enabled=yes
   become: yes
   become_user: root
   become_method: sudo
