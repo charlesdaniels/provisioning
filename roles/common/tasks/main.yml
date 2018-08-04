@@ -48,6 +48,7 @@
       - surfraw
       - links2
       - bison
+      - flex
 
   become: yes
   become_user: root
