@@ -202,6 +202,7 @@
   copy:
       src: "{{setupsoftware_dir}}/exa-linux-x86_64"
       dest: "/usr/local/bin/exa"
+      mode: 751
   become: yes
   become_user: root
   become_method: sudo
