@@ -47,6 +47,7 @@
       - cmake
       - surfraw
       - links2
+      - bison
 
   become: yes
   become_user: root
