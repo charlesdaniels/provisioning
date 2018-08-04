@@ -39,6 +39,7 @@
       - network-manager
       - network-manager-gnome
       - arandr
+      - firefox-esr
 
   become: yes
   become_user: root
@@ -125,23 +126,6 @@
   command: snap install {{ item }}
   with_items:
       - chromium
-      - firefox
   become: yes
   become_user: root
   become_method: sudo
-
-- name: Ensure Firefox Config Directory Exists
-  file: path="{{ ansible_env.HOME }}/snap/firefox/common/.config/user-dirs.dirs" state=directory
-
-- name: Link Firefox Downloads
-  file:
-    dest: "{{ ansible_env.HOME }}/snap/firefox/common/Downloads"
-    src: "{{ ansible_env.HOME }}/Downloads"
-    state: link
-
-- name: Link Firefox Desktop
-  file:
-    dest: "{{ ansible_env.HOME }}/snap/firefox/common/Desktop"
-    src: "{{ ansible_env.HOME }}/Desktop"
-    state: link
-
