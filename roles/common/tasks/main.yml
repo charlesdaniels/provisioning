@@ -16,6 +16,11 @@
   become_method: sudo
   become: yes
 
+- name: Early Dependencies
+  apt: pkg={{ item }} state=latest
+  with_items:
+      - apt-transport-https
+
 - name: Add PowerShell Apt Key
   apt_key:
       url: "https://packages.microsoft.com/keys/microsoft.asc"
