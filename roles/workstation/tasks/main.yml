@@ -62,7 +62,7 @@
   shell: "systemctl enable --user mpd.service && systemctl start --user mpd.service"
 
 - name: Install Cargo Crates
-  shell: 'if [ ! -x "$(which {{ item }})" ] ; then cargo install {{ item }} ; fi'
+  shell: 'if ! {{ ansible_env.HOME }}/.cargo/bin/cargo install --list | grep {{ item }} ; then {{ ansible_env.HOME }}/.cargo/bin/cargo install {{ item }} ; fi'
   with_items:
       - alacritty
 
