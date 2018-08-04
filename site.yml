@@ -4,12 +4,16 @@
 - name: common
   tags: common
   hosts: all localhost
+  vars:
+      setupsoftware_dir: "{{ ansible_env.HOME}}/.local/share/setupsoftware/"
   roles:
       - role: common
 
 - name: workstation
   tags: workstation
   hosts: all localhost
+  vars:
+      setupsoftware_dir: "{{ ansible_env.HOME}}/.local/share/setupsoftware/"
   roles:
       - role: common
       - role: workstation
@@ -17,6 +21,8 @@
 - name: zfs-server
   tags: zfs-server
   hosts: all localhost
+  vars:
+      setupsoftware_dir: "{{ ansible_env.HOME}}/.local/share/setupsoftware/"
   roles:
       - role: common
       - role: zfs
@@ -24,6 +30,8 @@
 - name: zfs-workstation
   tags: zfs-workstation
   hosts: all localhost
+  vars:
+      setupsoftware_dir: "{{ ansible_env.HOME}}/.local/share/setupsoftware/"
   roles:
       - role: common
       - role: workstation
@@ -32,6 +40,8 @@
 - name: laptop
   tags: laptop
   hosts: all localhost
+  vars:
+      setupsoftware_dir: "{{ ansible_env.HOME}}/.local/share/setupsoftware/"
   roles:
       - role: common
       - role: workstation
@@ -40,6 +50,8 @@
 - name: zfs-laptop
   tags: zfs-laptop
   hosts: all localhost
+  vars:
+      setupsoftware_dir: "{{ ansible_env.HOME}}/.local/share/setupsoftware/"
   roles:
       - role: common
       - role: workstation
@@ -49,6 +61,8 @@
 - name: x220
   tags: x220
   hosts: all localhost
+  vars:
+      setupsoftware_dir: "{{ ansible_env.HOME}}/.local/share/setupsoftware/"
   roles:
       - role: common
       - role: workstation

@@ -107,27 +107,13 @@
 - name: rustup update
   shell: "{{ ansible_env.HOME }}/.cargo/bin/rustup update"
 
-# Note that cargo install will error if the target is already installed, hence
-# the checks.
-- name: Install Cargo Crates
-  shell: 'if ! {{ ansible_env.HOME }}/.cargo/bin/cargo install --list | grep {{ item }} ; then {{ ansible_env.HOME }}/.cargo/bin/cargo install {{ item }} ; fi'
-  with_items:
-      - cargo-update
-      - exa
-      - ripgrep
-      - fd-find
-      - fcat
-      - tin-summer
-      - tokei
-      - xsv
-
 - name: Ensure Repos Directory Exists
-  file: path={{ ansible_env.HOME}}/.local/share/setupsoftware state=directory
+  file: path={{setupsoftware_dir}} state=directory
 
 - name: Clone dotfiles
   git:
     repo: 'git://github.com/charlesdaniels/dotfiles.git'
-    dest: '{{ ansible_env.HOME}}/.local/share/setupsoftware/dotfiles'
+    dest: '{{setupsoftware_dir}}/dotfiles'
     update: yes
     clone: yes
     recursive: yes
@@ -136,7 +122,7 @@
 - name: Clone charles-util
   git:
     repo: 'git://github.com/charlesdaniels/charles-util.git'
-    dest: '{{ ansible_env.HOME}}/.local/share/setupsoftware/charles-util'
+    dest: '{{setupsoftware_dir}}/charles-util'
     update: yes
     clone: yes
     recursive: yes
@@ -144,7 +130,7 @@
 - name: Clone herc-tools-public
   git:
     repo: 'git://github.com/HeRCLab/herc-tools-public.git'
-    dest: '{{ ansible_env.HOME}}/.local/share/setupsoftware/herc-tools-public'
+    dest: '{{setupsoftware_dir}}/herc-tools-public'
     update: yes
     clone: yes
     recursive: yes
@@ -152,30 +138,30 @@
 - name: Clone Pcalc
   git:
     repo: 'git://github.com/vapier/pcalc.git'
-    dest: '{{ ansible_env.HOME}}/.local/share/setupsoftware/pcalc'
+    dest: '{{setupsoftware_dir}}/pcalc'
     update: yes
     clone: yes
     recursive: yes
     version: v4
 
 - name: Install dotfiles
-  shell: "sh {{ ansible_env.HOME}}/.local/share/setupsoftware/dotfiles/install.sh"
+  shell: "sh {{setupsoftware_dir}}/dotfiles/install.sh"
   ignore_errors: yes
 
 - name: Install charles-util
   command: make install
   args:
-    chdir: '{{ ansible_env.HOME}}/.local/share/setupsoftware/charles-util'
+    chdir: '{{setupsoftware_dir}}/charles-util'
 
 - name: Install herc-tools-public
   command: make install
   args:
-    chdir: '{{ ansible_env.HOME}}/.local/share/setupsoftware/herc-tools-public'
+    chdir: '{{setupsoftware_dir}}/herc-tools-public'
 
 - name: Build Pcalc
   command: make
   args:
-    chdir: '{{ ansible_env.HOME}}/.local/share/setupsoftware/pcalc'
+    chdir: '{{setupsoftware_dir}}/pcalc'
   become: yes
   become_user: root
   become_method: sudo
@@ -183,7 +169,65 @@
 - name: Install Pcalc
   command: make install
   args:
-    chdir: '{{ ansible_env.HOME}}/.local/share/setupsoftware/pcalc'
+    chdir: '{{setupsoftware_dir}}/pcalc'
+  become: yes
+  become_user: root
+  become_method: sudo
+
+- name: Fetch exa
+  get_url:
+      url: "https://github.com/ogham/exa/releases/download/v0.8.0/exa-linux-x86_64-0.8.0.zip"
+      dest: "{{setupsoftware_dir}}/exa.zip"
+
+- name: Extract exa
+  unarchive:
+      src: "{{setupsoftware_dir}}/exa.zip"
+      dest: "{{setupsoftware_dir}}/"
+
+- name: Install exa
+  copy:
+      src: "{{setupsoftware_dir}}/exa-linux-x86_64"
+      dest: "/usr/local/bin/exa"
+  become: yes
+  become_user: root
+  become_method: sudo
+
+- name: Install ripgrep
+  apt:
+      deb: "https://github.com/BurntSushi/ripgrep/releases/download/0.9.0/ripgrep_0.9.0_amd64.deb"
+  become: yes
+  become_user: root
+  become_method: sudo
+
+- name: Install fd-find
+  apt:
+      deb: "https://github.com/sharkdp/fd/releases/download/v7.0.0/fd_7.0.0_amd64.deb"
+  become: yes
+  become_user: root
+  become_method: sudo
+
+- name: Fetch tin-summer
+  get_url:
+      url: "https://github.com/vmchale/tin-summer/releases/download/1.21.5/tin-summer-1.21.5-x86_64-unknown-linux-gnu.tar.gz"
+      dest: "{{setupsoftware_dir}}/tin-summer.tar.gz"
+
+- name: Extract tin-summer
+  unarchive:
+      src: "{{setupsoftware_dir}}/tin-summer.tar.gz"
+      dest: "{{setupsoftware_dir}}/"
+
+- name: Install tin-summer
+  copy:
+      src: "{{setupsoftware_dir}}/sn"
+      dest: "/usr/local/bin/sn"
+      mode: 751
+  become: yes
+  become_user: root
+  become_method: sudo
+
+- name: Install tokei
+  apt:
+      deb: "https://github.com/Aaronepower/tokei/releases/download/v6.0.0/tokei-v6.0.0-x86_64-unknown-linux-gnu.deb"
   become: yes
   become_user: root
   become_method: sudo

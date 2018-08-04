@@ -71,13 +71,6 @@
 - name: Setup MPD Service
   shell: "systemctl enable --user mpd.service && systemctl start --user mpd.service"
 
-- name: Install Cargo Crates
-  shell: 'if ! {{ ansible_env.HOME }}/.cargo/bin/cargo install --list | grep {{ item }} ; then {{ ansible_env.HOME }}/.cargo/bin/cargo install {{ item }} ; fi'
-  with_items:
-      - alacritty
-
-- name: Update Cargo Crates
-  command: cargo install-update -a
 
 - name: Ensure home bin Exists
   file: path={{ ansible_env.HOME }}/bin state=directory
