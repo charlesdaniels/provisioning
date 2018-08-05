@@ -42,6 +42,7 @@
       - firefox-esr
       - rxvt-unicode-256color
       - pinta
+      - chromium
 
   become: yes
   become_user: root
@@ -72,6 +73,7 @@
 
 - name: Setup MPD Service
   shell: "systemctl enable --user mpd.service && systemctl start --user mpd.service"
+  changed_when: false
 
 - name: Ensure home bin Exists
   file: path={{ ansible_env.HOME }}/bin state=directory
@@ -116,17 +118,9 @@
       dest: "{{ ansible_env.HOME}}/.local/share/setupsoftware/cyberchef.htm"
       mode: 0644
 
-- name: Install Snaps
-  command: snap install {{ item }}
-  with_items:
-      - chromium
-  become: yes
-  become_user: root
-  become_method: sudo
-
 - name: Delete 70-no-bitmaps
   file:
-      path: /etc/fonts/conf.d/70-yes-bitmaps.conf
+      path: /etc/fonts/conf.d/70-no-bitmaps.conf
       state: absent
   become: yes
   become_user: root
@@ -141,21 +135,50 @@
   become_user: root
   become_method: sudo
 
-- name: Download GohuFont
-  get_url:
-      url: "http://font.gohu.org/gohufont-2.1.tar.gz"
-      dest: "{{setupsoftware_dir}}/gohufont.tar.gz"
-
 - name: Install GohuFont
   unarchive:
-      src: "{{setupsoftware_dir}}/gohufont.tar.gz"
+      src: "http://font.gohu.org/gohufont-2.1.tar.gz"
       dest: /usr/share/fonts/
+      remote_src: true
+      creates: "/usr/share/fonts/gohufont-2.1"
+  become: yes
+  become_user: root
+  become_method: sudo
+  register: gohu
+
+- name: Refresh Font Cache
+  shell: "fc-cache -f -v"
+  become: yes
+  become_user: root
+  become_method: sudo
+  when: not gohu.skipped and gohu.changed
+
+- name: Create Arduino IDE Install Directory
+  file: 
+    path: "/opt/arduino"
+    state: directory
   become: yes
   become_user: root
   become_method: sudo
 
-- name: Refresh Font Cache
-  shell: "fc-cache -f -v"
+- name: Install Arduino IDE
+  unarchive:
+      src: "https://downloads.arduino.cc/arduino-1.8.5-linux64.tar.xz"
+      dest: "/opt/arduino/"
+      remote_src: true
+      creates: "/opt/arduino/arduino-1.8.5"
+  become: yes
+  become_user: root
+  become_method: sudo
+
+- name: Link Arduino IDE Binaries
+  file:
+      src: "/opt/arduino/arduino-1.8.5/{{ item }}"
+      dest: "/usr/local/bin/{{ item }}"
+      state: link
+  with_items:
+      - arduino
+      - arduino-builder
   become: yes
   become_user: root
   become_method: sudo

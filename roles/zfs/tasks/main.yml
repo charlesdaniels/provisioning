@@ -3,6 +3,7 @@
 - name: Get Uname
   shell: uname -r
   register: uname_r_cmd
+  changed_when: false
 
 - set_fact:
     uname_r={{ uname_r_cmd.stdout }}
@@ -46,14 +47,11 @@
 - name: Clone Sanoid
   git:
     repo: 'git://github.com/jimsalterjrs/sanoid.git'
-    dest: '/root/sanoid'
+    dest: '{{setupsoftware_dir}}/sanoid'
     update: yes
     clone: yes
     recursive: yes
     version: v1.4.18
-  become_user: root
-  become_method: sudo
-  become: yes
 
 - name: Install Sanoid Dependencies
   apt: pkg={{ item }} state=latest
@@ -70,11 +68,10 @@
   become_user: root
   become_method: sudo
   become: yes
-  shell: "cp /root/sanoid/{{ item }} /usr/sbin/{{ item }}"
-  # copy:
-  #     src: "/root/sanoid/{{ item }}"
-  #     dest: "/usr/local/bin/{{ item }}"
-  #     mode: 0755
+  copy:
+      src: "{{setupsoftware_dir}}/sanoid/{{ item }}"
+      dest: "/usr/local/bin/{{ item }}"
+      mode: 0755
   with_items:
       - sanoid
       - syncoid
@@ -87,25 +84,22 @@
   become: yes
 
 - name: Install Sanoid Default Configuration
-  shell: "cp /root/sanoid/sanoid.defaults.conf /etc/sanoid/sanoid.defaults.conf"
-  # copy:
-  #     src: "/root/sanoid/sanoid.defaults.conf"
-  #     dest: "/etc/sanoid/sanoid.defaults.conf"
-  #     mode: 0644
+  copy:
+      src: "{{setupsoftware_dir}}/sanoid/sanoid.defaults.conf"
+      dest: "/etc/sanoid/sanoid.defaults.conf"
+      mode: 0644
   become_user: root
   become_method: sudo
   become: yes
 
 - name: Install Sanoid Services
-  shell: "cp /root/sanoid/debian/{{ item }} /etc/systemd/system/{{ item }}"
-  # copy:
-  #     src: "/root/sanoid/packages/debian/{{ item }}"
-  #     dest: "/etc/systemd/system/{{ item }}"
-  #     mode: 0755
+  copy:
+      src: "{{setupsoftware_dir}}/sanoid/debian/{{ item }}"
+      dest: "/etc/systemd/system/{{ item }}"
+      mode: 755
   with_items:
       - sanoid.service
       - sanoid.timer
   become_user: root
   become_method: sudo
   become: yes
-
