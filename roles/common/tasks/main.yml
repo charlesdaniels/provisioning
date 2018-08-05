@@ -73,6 +73,7 @@
       - sshfs
       - powershell
       - aptitude
+      - glances
 
   become: yes
   become_user: root

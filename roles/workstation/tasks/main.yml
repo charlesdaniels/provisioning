@@ -43,6 +43,11 @@
       - rxvt-unicode-256color
       - pinta
       - chromium
+      - lxappearance
+      - gtk2-engines
+      - clearlooks-phenix-theme
+      - adwaita-icon-theme
+      - zeal
 
   become: yes
   become_user: root
