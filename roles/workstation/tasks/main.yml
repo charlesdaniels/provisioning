@@ -123,3 +123,39 @@
   become: yes
   become_user: root
   become_method: sudo
+
+- name: Delete 70-no-bitmaps
+  file:
+      path: /etc/fonts/conf.d/70-yes-bitmaps.conf
+      state: absent
+  become: yes
+  become_user: root
+  become_method: sudo
+
+- name: Enable bitmaps
+  file:
+      src: /usr/share/fontconfig/conf.avail/70-yes-bitmaps.conf
+      dest: /etc/fonts/conf.d/70-yes-bitmaps.conf
+      state: link
+  become: yes
+  become_user: root
+  become_method: sudo
+
+- name: Download GohuFont
+  get_url:
+      url: "http://font.gohu.org/gohufont-2.1.tar.gz"
+      dest: "{{setupsoftware_dir}}/gohufont.tar.gz"
+
+- name: Install GohuFont
+  unarchive:
+      src: "{{setupsoftware_dir}}/gohufont.tar.gz"
+      dest: /usr/share/fonts/
+  become: yes
+  become_user: root
+  become_method: sudo
+
+- name: Refresh Font Cache
+  shell: "fc-cache -f -v"
+  become: yes
+  become_user: root
+  become_method: sudo
