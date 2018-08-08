@@ -91,19 +91,6 @@ def get_batt():
         batt_str = "{} {}% ({})".format(state, pct, remaining)
     return batt_str
 
-def get_dirty():
-    s = ""
-    if not os.path.exists("/proc/meminfo"):
-        s = "dirty unknown"
-    else:
-        with open("/proc/meminfo", "r") as f:
-            for line in f:
-                line = line.strip()
-                if line.split()[0] == "Dirty:":
-                    s += ' '.join(line.split()[1:])
-        s += " dirty"
-    return s
-
 def get_load():
 
     global cpufreq_history
@@ -140,7 +127,19 @@ def get_mem():
     mem_total = format_bytes(mem_total)
     mem_avail = format_bytes(mem_avail)
 
-    s = "mem: {}".format(mem_avail)
+    mem_dirty = ""
+    s = ""
+
+    if os.path.exists("/proc/meminfo"):
+        with open("/proc/meminfo", "r") as f:
+            for line in f:
+                line = line.strip()
+                if line.split()[0] == "Dirty:":
+                    mem_dirty += ' '.join(line.split()[1:])
+        mem_dirty += " dirty"
+        s = "mem: {} ({})".format(mem_avail, mem_dirty)
+    else:
+        s = "mem: {}".format(mem_avail)
     return s
 
 def get_swp():
@@ -296,9 +295,8 @@ def main():
     wifi = get_wifi()
     ip = get_ip()
     dock = get_dock()
-    dirty = get_dirty()
 
-    show = [dock, dirty, temp, mem, disk ,load, ip, wifi, batt, vol, time]
+    show = [dock, temp, mem, disk ,load, ip, wifi, batt, vol, time]
     bar = ""
     sep = " | "
     for item in show:
