@@ -74,6 +74,9 @@
       - powershell
       - aptitude
       - glances
+      - dnsutils
+      - finger
+      - net-tools
 
   become: yes
   become_user: root
