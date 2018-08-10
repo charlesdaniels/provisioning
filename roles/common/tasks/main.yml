@@ -78,6 +78,9 @@
       - finger
       - net-tools
       - gnuplot
+      - upower
+      - powertop
+      - acpi
 
   become: yes
   become_user: root
