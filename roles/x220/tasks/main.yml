@@ -14,3 +14,8 @@
   become_method: sudo
   with_items:
       - xhci_reset
+
+- name: Install Intel Xorg Driver
+  apt: pkg={{ item }} state=latest
+  with_items:
+      - xserver-xorg-video-intel

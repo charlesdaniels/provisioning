@@ -5,9 +5,7 @@
   become_user: root
   become_method: sudo
   with_items:
-      - lockscreen
-      - iptables_config
-      - suspend_prevent_atboot
+      - xhci_reset
 
 - name: Enable Services
   service: name={{ item }}.service enabled=yes
@@ -15,14 +13,14 @@
   become_user: root
   become_method: sudo
   with_items:
-      - lockscreen
-      - iptables_config
-      - suspend_prevent_atboot
+      - xhci_reset
 
-- name: Add suspend prevention rules
-  template:
-      src: 50-suspend-prevent.rules.j2
-      dest: /etc/udev/rules.d/50-suspend-prevent.rules
+- name: Install nVidia Xorg Driver
+  apt: pkg={{ item }} state=latest
+  with_items:
+      - nvidia-egl-icd
+      - nvidia-driver-libs
+      - nvidia-driver
   become: yes
   become_user: root
   become_method: sudo

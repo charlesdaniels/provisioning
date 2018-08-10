@@ -77,6 +77,7 @@
       - dnsutils
       - finger
       - net-tools
+      - gnuplot
 
   become: yes
   become_user: root
