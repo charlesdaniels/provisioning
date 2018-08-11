@@ -1,0 +1,7 @@
+---
+- name: update grub
+  command: update-grub
+  listen: "update grub"
+  become: yes
+  become_user: root
+  become_method: sudo

@@ -51,7 +51,16 @@
       - xbacklight
       - gnucash
       - gnumeric
+      - xfburn
 
+  become: yes
+  become_user: root
+  become_method: sudo
+
+- name: Install WINE
+  apt: pkg={{ item }} state=latest install_recommends=true
+  with_items:
+      - winehq-stable
   become: yes
   become_user: root
   become_method: sudo

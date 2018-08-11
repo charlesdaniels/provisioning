@@ -19,3 +19,15 @@
   apt: pkg={{ item }} state=latest
   with_items:
       - xserver-xorg-video-intel
+  become: yes
+  become_user: root
+  become_method: sudo
+
+- name: Install backlight workaround
+  template:
+      src: grub.j2
+      dest: /etc/default/grub
+  become: yes
+  become_user: root
+  become_method: sudo
+  notify: update grub

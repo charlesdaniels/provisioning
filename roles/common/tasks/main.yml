@@ -38,6 +38,29 @@
   become_user: root
   become_method: sudo
 
+- name: Add i386 Architecture
+  command: "dpkg --add-architecture i386"
+  become: yes
+  become_user: root
+  become_method: sudo
+
+- name: Add WINE Apt Key
+  apt_key:
+      url: "https://dl.winehq.org/wine-builds/Release.key"
+      state: present
+  become: yes
+  become_user: root
+  become_method: sudo
+
+- name: Add WINE repository
+  apt_repository:
+      repo: "deb https://dl.winehq.org/wine-builds/debian/ stretch main"
+      state: present
+      update_cache: true
+  become: yes
+  become_user: root
+  become_method: sudo
+
 - name: CLI tools
   apt: pkg={{ item }} state=latest
   with_items:
