@@ -105,6 +105,7 @@
       - powertop
       - acpi
       - nasm
+      - ragel
 
   become: yes
   become_user: root
@@ -142,6 +143,9 @@
       - libssh2-1-dev
       - libssl-dev
       - openssl
+      - libboost1.62-dev 
+      - sqlite3
+      - libqslite3-dev
 
   become: yes
   become_user: root
