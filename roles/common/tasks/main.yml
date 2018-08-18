@@ -104,6 +104,7 @@
       - upower
       - powertop
       - acpi
+      - nasm
 
   become: yes
   become_user: root

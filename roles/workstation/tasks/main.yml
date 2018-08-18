@@ -52,6 +52,7 @@
       - gnucash
       - gnumeric
       - xfburn
+      - winetricks
 
   become: yes
   become_user: root
