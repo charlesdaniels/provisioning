@@ -190,6 +190,15 @@
     recursive: yes
     version: v4
 
+- name: Clone VAsim
+  git:
+    repo: 'git://github.com/jackwadden/VASim'
+    dest: '{{setupsoftware_dir}}/vasim'
+    update: yes
+    clone: yes
+    recursive: yes
+    force: yes
+
 - name: Install dotfiles
   shell: "sh {{setupsoftware_dir}}/dotfiles/install.sh"
   ignore_errors: true
@@ -216,11 +225,27 @@
   become_method: sudo
   changed_when: false
 
+- name: Build vasim
+  command: make
+  args:
+    chdir: '{{setupsoftware_dir}}/vasim'
+  changed_when: false
+
 - name: Install Pcalc
   command: make install
   args:
     chdir: '{{setupsoftware_dir}}/pcalc'
     creates: /usr/bin/pcalc
+  become: yes
+  become_user: root
+  become_method: sudo
+
+- name: Install vasim
+  copy:
+      remote_src: yes
+      src: '{{setupsoftware_dir}}/vasim/vasim'
+      dest: '/usr/local/bin/vasim'
+      mode: 755
   become: yes
   become_user: root
   become_method: sudo
