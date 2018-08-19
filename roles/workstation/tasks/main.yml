@@ -53,6 +53,8 @@
       - gnumeric
       - xfburn
       - winetricks
+      - steam
+      - system-config-printer
 
   become: yes
   become_user: root
