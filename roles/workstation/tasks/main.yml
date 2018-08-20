@@ -60,6 +60,13 @@
   become_user: root
   become_method: sudo
 
+- name: Install snaps
+  command: snap install remmina
+  become: yes
+  become_user: root
+  become_method: sudo
+  changed_when: false
+
 - name: Install WINE
   apt: pkg={{ item }} state=latest install_recommends=true
   with_items:

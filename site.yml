@@ -8,6 +8,8 @@
       setupsoftware_dir: "{{ ansible_env.HOME}}/.local/share/setupsoftware/"
   roles:
       - role: common
+      - role: from-blob
+      - role: from-source
 
 - name: x220
   tags: x220
@@ -16,6 +18,8 @@
       setupsoftware_dir: "{{ ansible_env.HOME}}/.local/share/setupsoftware/"
   roles:
       - role: common
+      - role: from-blob
+      - role: from-source
       - role: workstation
       - role: laptop
       - role: x220
@@ -29,6 +33,8 @@
       setupsoftware_dir: "{{ ansible_env.HOME}}/.local/share/setupsoftware/"
   roles:
       - role: common
+      - role: from-blob
+      - role: from-source
       - role: workstation
       - role: laptop
       - role: t430
