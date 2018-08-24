@@ -55,6 +55,7 @@
       - winetricks
       - steam
       - system-config-printer
+      - calibre
 
   become: yes
   become_user: root
