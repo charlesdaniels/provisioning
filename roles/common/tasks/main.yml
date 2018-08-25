@@ -106,6 +106,7 @@
       - acpi
       - nasm
       - ragel
+      - rfkill
 
   become: yes
   become_user: root
