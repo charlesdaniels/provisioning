@@ -56,6 +56,8 @@
       - steam
       - system-config-printer
       - calibre
+      - goldendict
+      - goldendict-wordnet
 
   become: yes
   become_user: root
