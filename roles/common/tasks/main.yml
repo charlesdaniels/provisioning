@@ -107,6 +107,7 @@
       - nasm
       - ragel
       - rfkill
+      - units
 
   become: yes
   become_user: root
