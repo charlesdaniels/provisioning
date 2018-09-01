@@ -152,3 +152,12 @@
   become: yes
   become_user: root
   become_method: sudo
+
+- name: Install TI udev rules
+  get_url:
+      dest: /etc/udev/rules.d/71-ti-permissions.rules
+      url: 'https://s3.amazonaws.com/energiaUS/files/71-ti-permissions.rules'
+      mode: 0644
+  become: yes
+  become_user: root
+  become_method: sudo
