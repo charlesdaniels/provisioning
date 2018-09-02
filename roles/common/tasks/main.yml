@@ -108,6 +108,7 @@
       - ragel
       - rfkill
       - units
+      - ctags
 
   become: yes
   become_user: root
@@ -148,6 +149,7 @@
       - libboost1.62-dev
       - sqlite3
       - libsqlite3-dev
+      - python3-lxml
 
   become: yes
   become_user: root

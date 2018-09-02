@@ -57,6 +57,7 @@
       - calibre
       - goldendict
       - goldendict-wordnet
+      - libnotify-bin
 
   become: yes
   become_user: root
