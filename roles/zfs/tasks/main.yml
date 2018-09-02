@@ -103,3 +103,11 @@
   become_user: root
   become_method: sudo
   become: yes
+
+- name: Apply mount-on-boot Workaround
+  template:
+      src: zfs-mount.service.j2
+      dest: /lib/systemd/system/zfs-mount.service
+  become_user: root
+  become_method: sudo
+  become: yes
