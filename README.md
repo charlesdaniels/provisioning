@@ -21,3 +21,13 @@ The following roles are available:
 
 **NOTE**: You should run Ansible as the user account you log in with normally -
 the `-K` will cause it to prompt you for the sudo password to use.
+
+# Dependencies
+
+To run the provisioning script on Debian 9, you first need to manually install
+the following packages:
+
+* `python`
+* `ansible`
+* `aptitude`
+* `apt-transport-https`
