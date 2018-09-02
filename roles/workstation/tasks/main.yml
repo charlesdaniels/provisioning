@@ -58,6 +58,7 @@
       - goldendict
       - goldendict-wordnet
       - libnotify-bin
+      - xclip
 
   become: yes
   become_user: root
