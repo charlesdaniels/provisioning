@@ -109,6 +109,7 @@
       - rfkill
       - units
       - ctags
+      - latexmk
 
   become: yes
   become_user: root
