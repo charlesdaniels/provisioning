@@ -110,6 +110,7 @@
       - units
       - ctags
       - latexmk
+      - texlive-latex-extra
 
   become: yes
   become_user: root
