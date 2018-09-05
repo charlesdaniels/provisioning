@@ -84,7 +84,6 @@
       - imagemagick
       - youtube-dl
       - lm-sensors
-      - texlive
       - python3-sphinx
       - curl
       - pkg-config
@@ -109,8 +108,6 @@
       - rfkill
       - units
       - ctags
-      - latexmk
-      - texlive-latex-extra
 
   become: yes
   become_user: root

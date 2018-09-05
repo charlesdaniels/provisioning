@@ -25,6 +25,7 @@
       - role: x220
       - role: zfs
       - role: dcp7065dn-support
+      - role: latex
 
 - name: t430
   tags: t430
@@ -40,3 +41,4 @@
       - role: t430
       - role: zfs
       - role: dcp7065dn-support
+      - role: latex
