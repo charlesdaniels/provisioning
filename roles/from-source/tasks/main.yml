@@ -90,7 +90,7 @@
   changed_when: false
 
 - name: Build vasim
-  command: make
+  shell: "make CC=g++"
   args:
     chdir: '{{setupsoftware_dir}}/vasim'
   changed_when: false
