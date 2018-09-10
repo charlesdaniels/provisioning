@@ -10,7 +10,7 @@
     update: yes
     clone: yes
     recursive: yes
-    version: next
+    version: master
     force: yes
 
 - name: Clone charles-util
