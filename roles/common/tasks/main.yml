@@ -163,3 +163,8 @@
   become: yes
   become_user: root
   become_method: sudo
+
+- name: Install modules from pip
+  shell: pip3 install --user {{ item}}
+  with_items:
+      - pyinstaller
