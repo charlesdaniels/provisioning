@@ -22,9 +22,7 @@
       - role: from-source
       - role: workstation
       - role: laptop
-      - role: zfs
       - role: latex
-
 
 - name: x220
   tags: x220
