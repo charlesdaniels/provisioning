@@ -167,6 +167,10 @@
   become_method: sudo
 
 - name: Install modules from pip
-  shell: pip3 install --user {{ item}}
+  # TODO: it would be preferable to not do a global pip install
+  shell: pip3 install {{ item}}
   with_items:
       - pyinstaller
+  become: yes
+  become_user: root
+  become_method: sudo
