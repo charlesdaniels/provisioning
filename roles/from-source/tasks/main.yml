@@ -66,16 +66,22 @@
   changed_when: false
 
 - name: Install charles-util
-  command: make install
+  command: "make BIN_INSTALL_DIR=/usr/local/bin MAN_INSTALL_DIR=/usr/local/man install"
   args:
     chdir: '{{setupsoftware_dir}}/charles-util'
   changed_when: false
+  become: yes
+  become_user: root
+  become_method: sudo
 
 - name: Install herc-tools-public
-  command: make install
+  shell: "make PREFIX=/usr/local/ install"
   args:
     chdir: '{{setupsoftware_dir}}/herc-tools-public'
   changed_when: false
+  become: yes
+  become_user: root
+  become_method: sudo
 
 - name: Build Pcalc
   command: make
