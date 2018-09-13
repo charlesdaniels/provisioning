@@ -111,6 +111,9 @@
       - upx-ucl
       - p7zip
       - unzip
+      - man-db
+      - groff
+      - txt2man
 
   become: yes
   become_user: root
