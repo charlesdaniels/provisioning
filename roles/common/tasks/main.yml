@@ -114,6 +114,8 @@
       - man-db
       - groff
       - txt2man
+      - openjdk-8-jdk
+      - openjdk-8-jre
 
   become: yes
   become_user: root
