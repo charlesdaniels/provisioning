@@ -109,6 +109,8 @@
       - units
       - ctags
       - upx-ucl
+      - p7zip
+      - unzip
 
   become: yes
   become_user: root
