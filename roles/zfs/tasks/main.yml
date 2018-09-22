@@ -70,7 +70,7 @@
   become: yes
   copy:
       src: "{{setupsoftware_dir}}/sanoid/{{ item }}"
-      dest: "/usr/local/bin/{{ item }}"
+      dest: "/usr/bin/{{ item }}"
       mode: 0755
   with_items:
       - sanoid
