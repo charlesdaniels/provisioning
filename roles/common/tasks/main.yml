@@ -104,6 +104,7 @@
       - python3-sphinx
       - python3-virtualenv
       - ragel
+      - ranger
       - rfkill
       - slurm
       - sshfs
