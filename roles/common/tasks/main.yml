@@ -82,6 +82,13 @@
       - htop
       - imagemagick
       - iotop
+      - libconfig-tiny-perl
+      - libfile-path-expand-perl
+      - libfilesys-df-perl
+      - libnet-address-ip-local-perl
+      - libnumber-bytes-human-perl
+      - libsys-meminfo-perl
+      - libtimedate-perl
       - links2
       - lm-sensors
       - man-db
