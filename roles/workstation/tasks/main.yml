@@ -117,7 +117,6 @@
     - system-lock
     - system-reset-xhci
     - system-screenshot
-    - system-statusline
     - system-suspendctl
 
 - name: Ensure opt bin directory exists
