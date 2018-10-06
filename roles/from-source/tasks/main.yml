@@ -60,6 +60,15 @@
       force: yes
       version: v1.0
 
+- name: Clone st
+  git:
+      repo: 'git://github.com/charlesdaniels/st.git'
+      dest: '{{setupsoftware_dir}}/st'
+      update: yes
+      clone: yes
+      recursive: yes
+      force: yes
+
 - name: Install dotfiles
   shell: "sh {{setupsoftware_dir}}/dotfiles/install.sh"
   ignore_errors: true
@@ -101,6 +110,12 @@
     chdir: '{{setupsoftware_dir}}/vasim'
   changed_when: false
 
+- name: Build st
+  command: make
+  args:
+    chdir: '{{setupsoftware_dir}}/st'
+  changed_when: false
+
 - name: Install Pcalc
   command: make install
   args:
@@ -125,6 +140,15 @@
       src: '{{setupsoftware_dir}}/vasim/vasim'
       dest: '/usr/local/bin/vasim'
       mode: 755
+  become: yes
+  become_user: root
+  become_method: sudo
+
+- name: Install st
+  command: make install
+  args:
+    chdir: '{{setupsoftware_dir}}/st'
+    creates: /usr/local/bin/pcalc
   become: yes
   become_user: root
   become_method: sudo
