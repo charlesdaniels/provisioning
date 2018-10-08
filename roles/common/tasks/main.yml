@@ -152,6 +152,10 @@
       - libboost1.62-dev
       - libfltk1.3
       - libfltk1.3-dev
+      - libfontconfig1
+      - libfontconfig1-dev
+      - libfreetype6
+      - libfreetype6-dev
       - libgit2-dev
       - libsqlite3-dev
       - libssh2-1-dev
