@@ -156,6 +156,12 @@
       - libsqlite3-dev
       - libssh2-1-dev
       - libssl-dev
+      - libx11-6
+      - libx11-dev
+      - libxext-6
+      - libxext-dev
+      - libxft-dev
+      - libxft2
       - openssl
       - python-psutil
       - python3-humanize
