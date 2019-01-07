@@ -1,8 +1,0 @@
----
-- name: restart sshd
-  service: name=sshd state=restarted
-  listen: "restart sshd"
-
-- name: restart nfs-idmapd
-  service: name=nfs-idmapd status=restarted
-  listen: "restart nfs-idmapd"
