@@ -1,0 +1,29 @@
+---
+- name: Install Services
+  template: src={{ item }}.service.j2 dest=/etc/systemd/system/{{ item }}.service
+  become: yes
+  become_user: root
+  become_method: sudo
+  with_items:
+      - lockscreen
+      - iptables_config
+      - suspend_prevent_atboot
+
+- name: Enable Services
+  service: name={{ item }}.service enabled=yes
+  become: yes
+  become_user: root
+  become_method: sudo
+  with_items:
+      - lockscreen
+      - iptables_config
+      - suspend_prevent_atboot
+
+- name: Add suspend prevention rules
+  template:
+      src: 50-suspend-prevent.rules.j2
+      dest: /etc/udev/rules.d/50-suspend-prevent.rules
+  become: yes
+  become_user: root
+  become_method: sudo
+

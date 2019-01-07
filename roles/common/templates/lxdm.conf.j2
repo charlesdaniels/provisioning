@@ -1,0 +1,69 @@
+# University of South Carolina - HeRC Lab - Recommended lxdm config for
+# Ubuntu 16.04 Xenial Workstations and Servers
+
+# Maintainer Information:
+#   Active Maintainer: Charles Daniels - cdaniels@fastmail.com
+#   Alternate Contact: Viraj Patel     - virajpatel20@gmail.com
+#     Faculty Contact: Jason Bakos     - jbakos@mailbox.sc.edu
+#
+#   Please email any improvements to the active maintainer!
+#
+# Notes:
+#   The biggest change from the default lxdm config is that the username must
+#   be entered for every user every login, which is necessary considering the
+#   quantity of users in the HeRC lab.
+#
+# Update History:
+#   2017-01-17 - Charles Daniels - initial version
+
+
+[base]
+# default session
+session=/usr/bin/mate-session
+
+# turn on numlock on login
+numlock=1
+
+# location to store xauth
+xauth_path=~/.Xauthority
+
+# require password even for users whose passwords are empty
+skip_password=0
+
+# greeter used to welcome the user
+greeter=/usr/lib/lxdm/lxdm-greeter-gtk
+
+[server]
+# X server configuration
+
+[display]
+# gtk theme used by greeter
+gtk_theme=Clearlooks
+
+# greeter background
+bg=/usr/share/backgrounds/herc/16_9_wallpaper.png
+
+# if show bottom pane
+bottom_pane=1
+
+# if show language select control
+lang=1
+
+# if show keyboard layout select control
+keyboard=1
+
+# the theme of greeter
+theme=Industrial
+
+[input]
+
+[userlist]
+# force the user to enter their username
+disable=1
+
+# whitelist user
+white=
+
+# blacklist user
+black=
+

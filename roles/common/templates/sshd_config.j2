@@ -1,0 +1,73 @@
+# University of South Carolina - HeRC Lab - Recommended sshd_config for
+# Ubuntu 16.04 Xenial Workstations and Servers
+#
+# Maintainer Information:
+#   Active Maintainer: Charles Daniels - cdaniels@fastmail.com
+#   Alternate Contact: Viraj Patel     - virajpatel20@gmail.com
+#     Faculty Contact: Jason Bakos     - jbakos@mailbox.sc.edu
+#
+#   Please email any improvements to the active maintainer!
+#
+# Notes:
+#
+#
+# Update History:
+#   2017-02-02 - Charles Daniels - initial version
+#
+#   2017-02-02 - Charles Daniels - modify SSH port from 222 to 22
+
+Port 22
+Protocol 2
+
+# HostKeys for protocol version 2
+HostKey /etc/ssh/ssh_host_rsa_key
+HostKey /etc/ssh/ssh_host_dsa_key
+HostKey /etc/ssh/ssh_host_ecdsa_key
+HostKey /etc/ssh/ssh_host_ed25519_key
+UsePrivilegeSeparation yes
+
+# Lifetime and size of ephemeral version 1 server key
+KeyRegenerationInterval 3600
+ServerKeyBits 1024
+
+# Logging
+SyslogFacility AUTH
+LogLevel INFO
+
+# Authentication:
+LoginGraceTime 120
+PermitRootLogin prohibit-password
+StrictModes yes
+
+RSAAuthentication yes
+PubkeyAuthentication yes
+#AuthorizedKeysFile %h/.ssh/authorized_keys
+
+# Don't read the user's ~/.rhosts and ~/.shosts files
+IgnoreRhosts yes
+# For this to work you will also need host keys in /etc/ssh_known_hosts
+RhostsRSAAuthentication no
+# similar for protocol version 2
+HostbasedAuthentication no
+# Uncomment if you don't trust ~/.ssh/known_hosts for RhostsRSAAuthentication
+#IgnoreUserKnownHosts yes
+
+# To enable empty passwords, change to yes (NOT RECOMMENDED)
+PermitEmptyPasswords no
+
+# Change to yes to enable challenge-response passwords (beware issues with
+# some PAM modules and threads)
+ChallengeResponseAuthentication no
+
+X11Forwarding yes
+X11DisplayOffset 10
+PrintMotd no
+PrintLastLog yes
+TCPKeepAlive yes
+#UseLogin no
+
+# Allow client to pass locale environment variables
+AcceptEnv LANG LC_*
+
+Subsystem sftp /usr/lib/openssh/sftp-server
+UsePAM yes

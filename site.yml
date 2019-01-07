@@ -1,0 +1,57 @@
+---
+
+
+- name: common
+  tags: common
+  hosts: all localhost
+  vars:
+      setupsoftware_dir: "{{ ansible_env.HOME}}/.local/share/setupsoftware/"
+  roles:
+      - role: common
+      - role: from-blob
+      - role: from-source
+
+- name: VPS
+  tags: VPS
+  hosts: all localhost
+  vars:
+      setupsoftware_dir: "{{ ansible_env.HOME}}/.local/share/setupsoftware/"
+  roles:
+      - role: common
+      - role: from-blob
+      - role: from-source
+      - role: workstation
+      - role: laptop
+      - role: latex
+
+- name: x220
+  tags: x220
+  hosts: all localhost
+  vars:
+      setupsoftware_dir: "{{ ansible_env.HOME}}/.local/share/setupsoftware/"
+  roles:
+      - role: common
+      - role: from-blob
+      - role: from-source
+      - role: workstation
+      - role: laptop
+      - role: x220
+      - role: zfs
+      - role: dcp7065dn-support
+      - role: latex
+
+- name: t430
+  tags: t430
+  hosts: all localhost
+  vars:
+      setupsoftware_dir: "{{ ansible_env.HOME}}/.local/share/setupsoftware/"
+  roles:
+      - role: common
+      - role: from-blob
+      - role: from-source
+      - role: workstation
+      - role: laptop
+      - role: t430
+      - role: zfs
+      - role: dcp7065dn-support
+      - role: latex

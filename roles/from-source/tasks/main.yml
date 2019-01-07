@@ -1,0 +1,154 @@
+---
+
+- name: Ensure Repos Directory Exists
+  file: path={{setupsoftware_dir}} state=directory
+
+- name: Clone dotfiles
+  git:
+    repo: 'git://github.com/charlesdaniels/dotfiles.git'
+    dest: '{{setupsoftware_dir}}/dotfiles'
+    update: yes
+    clone: yes
+    recursive: yes
+    version: master
+    force: yes
+
+- name: Clone charles-util
+  git:
+    repo: 'git://github.com/charlesdaniels/charles-util.git'
+    dest: '{{setupsoftware_dir}}/charles-util'
+    update: yes
+    clone: yes
+    recursive: yes
+    force: yes
+
+- name: Clone herc-tools-public
+  git:
+    repo: 'git://github.com/HeRCLab/herc-tools-public.git'
+    dest: '{{setupsoftware_dir}}/herc-tools-public'
+    update: yes
+    clone: yes
+    recursive: yes
+    force: yes
+
+- name: Clone Pcalc
+  git:
+    repo: 'git://github.com/vapier/pcalc.git'
+    dest: '{{setupsoftware_dir}}/pcalc'
+    update: yes
+    clone: yes
+    recursive: yes
+    version: v4
+    force: yes
+
+- name: Clone VAsim
+  git:
+    repo: 'git://github.com/jackwadden/VASim'
+    dest: '{{setupsoftware_dir}}/vasim'
+    update: yes
+    clone: yes
+    recursive: yes
+    force: yes
+
+- name: Clone qstats
+  git:
+      repo: 'git://github.com/tonyfischetti/qstats.git'
+      dest: '{{setupsoftware_dir}}/qstats'
+      update: yes
+      clone: yes
+      recursive: yes
+      force: yes
+      version: v1.0
+
+- name: Clone st
+  git:
+      repo: 'git://github.com/charlesdaniels/st.git'
+      dest: '{{setupsoftware_dir}}/st'
+      update: yes
+      clone: yes
+      recursive: yes
+      force: yes
+
+- name: Install dotfiles
+  shell: "sh {{setupsoftware_dir}}/dotfiles/install.sh"
+  ignore_errors: true
+  changed_when: false
+
+- name: Install charles-util
+  command: "make BIN_INSTALL_DIR=/usr/local/bin MAN_INSTALL_DIR=/usr/local/man install"
+  args:
+    chdir: '{{setupsoftware_dir}}/charles-util'
+  changed_when: false
+  become: yes
+  become_user: root
+  become_method: sudo
+
+- name: Install herc-tools-public
+  shell: "make PREFIX=/usr/local/ install"
+  args:
+    chdir: '{{setupsoftware_dir}}/herc-tools-public'
+  changed_when: false
+  become: yes
+  become_user: root
+  become_method: sudo
+
+- name: Build Pcalc
+  command: make
+  args:
+    chdir: '{{setupsoftware_dir}}/pcalc'
+  changed_when: false
+
+- name: Build qstats
+  command: make
+  args:
+    chdir: '{{setupsoftware_dir}}/qstats'
+  changed_when: false
+
+- name: Build vasim
+  shell: "make CC=g++"
+  args:
+    chdir: '{{setupsoftware_dir}}/vasim'
+  changed_when: false
+
+- name: Build st
+  command: make
+  args:
+    chdir: '{{setupsoftware_dir}}/st'
+  changed_when: false
+
+- name: Install Pcalc
+  command: make install
+  args:
+    chdir: '{{setupsoftware_dir}}/pcalc'
+    creates: /usr/bin/pcalc
+  become: yes
+  become_user: root
+  become_method: sudo
+
+- name: Install qstats
+  command: make install
+  args:
+    chdir: '{{setupsoftware_dir}}/qstats'
+    creates: /usr/local/bin/qstats
+  become: yes
+  become_user: root
+  become_method: sudo
+
+- name: Install vasim
+  copy:
+      remote_src: yes
+      src: '{{setupsoftware_dir}}/vasim/vasim'
+      dest: '/usr/local/bin/vasim'
+      mode: 755
+  become: yes
+  become_user: root
+  become_method: sudo
+
+- name: Install st
+  command: make install
+  args:
+    chdir: '{{setupsoftware_dir}}/st'
+    creates: /usr/local/bin/pcalc
+  become: yes
+  become_user: root
+  become_method: sudo
