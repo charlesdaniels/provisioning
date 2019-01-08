@@ -30,6 +30,9 @@
       - goldendict
       - goldendict-wordnet
       - libreoffice
+      - mate-control-center
+      - mate-screensaver
+      - mate-settings-daemon
       - mpv
       - musique
       - network-manager
@@ -49,7 +52,6 @@
       - xbacklight
       - xclip
       - xfburn
-      - xidle
 
   become: yes
   become_user: root
