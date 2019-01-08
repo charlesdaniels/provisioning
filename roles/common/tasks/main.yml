@@ -20,23 +20,15 @@
   apt: pkg={{ item }} state=latest
   with_items:
       - apt-transport-https
-
-- name: Add PowerShell Apt Key
-  apt_key:
-      url: "https://packages.microsoft.com/keys/microsoft.asc"
-      state: "present"
-  become: yes
   become_user: root
   become_method: sudo
-
-- name: Add PowerShell Repository
-  apt_repository:
-      repo: "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-debian-stretch-prod stretch main"
-      state: present
-      update_cache: true
   become: yes
+
+- name: add PowerShell Repository
+  apt: "deb=https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb"
   become_user: root
   become_method: sudo
+  become: yes
 
 - name: Add i386 Architecture
   command: "dpkg --add-architecture i386"
@@ -46,7 +38,7 @@
 
 - name: Add WINE Apt Key
   apt_key:
-      url: "https://dl.winehq.org/wine-builds/Release.key"
+      url: "https://dl.winehq.org/wine-builds/winehq.key"
       state: present
   become: yes
   become_user: root
@@ -54,12 +46,19 @@
 
 - name: Add WINE repository
   apt_repository:
-      repo: "deb https://dl.winehq.org/wine-builds/debian/ stretch main"
+      repo: "deb https://dl.winehq.org/wine-builds/ubuntu/ bionic main"
       state: present
       update_cache: true
   become: yes
   become_user: root
   become_method: sudo
+
+- name: update apt cache
+  apt:
+    update_cache: yes
+  become_user: root
+  become_method: sudo
+  become: yes
 
 - name: CLI tools
   apt: pkg={{ item }} state=latest
@@ -76,7 +75,6 @@
       - finger
       - flex
       - git
-      - glances
       - gnuplot
       - groff
       - htop
@@ -93,9 +91,11 @@
       - links2
       - lm-sensors
       - man-db
+      - mksh
       - nasm
       - net-tools
       - netcat
+      - neovim
       - nload
       - nmap
       - openjdk-8-jdk
@@ -114,17 +114,18 @@
       - ragel
       - ranger
       - rfkill
+      - ripgrep
       - slurm
       - sshfs
       - surfraw
       - tmux
+      - tokei
       - tree
       - txt2man
       - units
       - unzip
       - upower
       - upx-ucl
-      - vim
       - youtube-dl
       - zsh
   become: yes
@@ -150,6 +151,7 @@
   apt: pkg={{ item }} state=latest
   with_items:
       - libboost1.62-dev
+      - libbsd-dev
       - libfltk1.3
       - libfltk1.3-dev
       - libfontconfig1
@@ -162,8 +164,8 @@
       - libssl-dev
       - libx11-6
       - libx11-dev
-      - libxext-6
       - libxext-dev
+      - libxext6
       - libxft-dev
       - libxft2
       - openssl

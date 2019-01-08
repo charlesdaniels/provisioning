@@ -7,6 +7,12 @@
   with_items:
       - xhci_reset
 
+- name: Install Trackpoint Speed fFix
+  template: src=trackpoint.rules.j2 dest=/etc/udev/rules.d/trackpoint.rules
+  become: yes
+  become_user: root
+  become_method: sudo
+
 - name: Enable Services
   service: name={{ item }}.service enabled=yes
   become: yes

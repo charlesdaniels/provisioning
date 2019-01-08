@@ -1,10 +1,6 @@
-- name: enable slim
-  service: name=slim state=started enabled=yes
-  listen: "enable slim"
+- name: enable xdm
+  service: name=xdm state=started enabled=yes
+  listen: "enable xdm"
   become: yes
   become_user: root
   become_method: sudo
-
-- name: enable mpd
-  command: systemctl enable --user mpd && systemctl start --user mpd
-  listen: "enable mpd"

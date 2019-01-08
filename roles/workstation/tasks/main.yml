@@ -5,9 +5,8 @@
   with_items:
       - xorg
       - xinit
-      - i3
-      - slim
-  notify: enable slim
+      - xdm
+  notify: enable xdm
   become: yes
   become_user: root
   become_method: sudo
@@ -15,61 +14,46 @@
 - name: Install X-Related Utilities
   apt: pkg={{ item }} state=latest
   with_items:
-      - pcmanfm
-      - atril
-      - rofi
-      - pavucontrol
-      - pasystray
-      - redshift-gtk
-      - synapse
-      - feh
-      - compton
-      - pulseaudio
-      - compton
-      - mpv
-      - xautolock
-      - scrot
-      - blueman
-      - pulseaudio-module-bluetooth
-      - geeqie
-      - vim-gtk3
-      - thunderbird
-      - dbus
-      - mate-calc
-      - network-manager
-      - network-manager-gnome
+      - adwaita-icon-theme-full
+      - adwaita-qt
       - arandr
-      - firefox-esr
-      - rxvt-unicode-256color
-      - pinta
-      - chromium
-      - lxappearance
-      - gtk2-engines
-      - clearlooks-phenix-theme
-      - adwaita-icon-theme
-      - zeal
-      - xbacklight
-      - gnucash
-      - gnumeric
-      - xfburn
-      - winetricks
-      - system-config-printer
+      - atril
+      - caja
       - calibre
+      - compton
+      - dbus
+      - evolution
+      - feh
+      - firefox
+      - geeqie
+      - gnome-themes-extra
       - goldendict
       - goldendict-wordnet
-      - libnotify-bin
+      - libreoffice
+      - mpv
+      - musique
+      - network-manager
+      - network-manager-gnome
+      - pavucontrol
+      - pinta
+      - pulseaudio
+      - redshift
+      - remmina
+      - remmina-plugin-rdp
+      - remmina-plugin-vnc
+      - scrot
+      - steam
+      - system-config-printer
+      - vim-gtk3
+      - winetricks
+      - xbacklight
       - xclip
+      - xfburn
+      - xidle
 
   become: yes
   become_user: root
   become_method: sudo
-
-- name: Install snaps
-  command: snap install remmina
-  become: yes
-  become_user: root
-  become_method: sudo
-  changed_when: false
 
 - name: Install WINE
   apt: pkg={{ item }} state=latest install_recommends=true
@@ -91,33 +75,8 @@
   become_user: root
   become_method: sudo
 
-- name: Install MPD
-  notify: enable mpd
-  become: yes
-  become_user: root
-  become_method: sudo
-  apt: pkg={{ item }} state=latest
-  with_items:
-      - mpd
-      - mpc
-      - cantata
-
-- name: Setup MPD Service
-  shell: "systemctl enable --user mpd.service && systemctl start --user mpd.service"
-  changed_when: false
-
 - name: Ensure home bin Exists
   file: path={{ ansible_env.HOME }}/bin state=directory
-
-- name: Install System Scripts
-  copy: src={{ role_path }}/templates/scripts/{{ item }} dest={{ ansible_env.HOME}}/bin/{{ item }} mode=a+x
-  with_items:
-    - system-configure-iptables
-    - system-launch-compositor
-    - system-lock
-    - system-reset-xhci
-    - system-screenshot
-    - system-suspendctl
 
 - name: Ensure opt bin directory exists
   file: path=/opt/net.cdaniels/bin state=directory
@@ -129,20 +88,9 @@
   copy: src={{ role_path }}/templates/scripts/{{ item }} dest=/opt/net.cdaniels/bin/{{ item }} mode=a+x
   with_items:
       - system-reset-xhci
-      - system-lock
-      - system-configure-iptables
-      - system-suspendctl
   become: yes
   become_user: root
   become_method: sudo
-
-- name: Enable Services
-  service: name={{ item }}.service enabled=yes
-  become: yes
-  become_user: root
-  become_method: sudo
-  with_items:
-      - bluetooth
 
 - name: Download CybeChef
   get_url:
@@ -158,15 +106,6 @@
   become_user: root
   become_method: sudo
 
-- name: Enable bitmaps
-  file:
-      src: /usr/share/fontconfig/conf.avail/70-yes-bitmaps.conf
-      dest: /etc/fonts/conf.d/70-yes-bitmaps.conf
-      state: link
-  become: yes
-  become_user: root
-  become_method: sudo
-
 - name: Install GohuFont
   unarchive:
       src: "http://font.gohu.org/gohufont-2.1.tar.gz"
@@ -176,14 +115,12 @@
   become: yes
   become_user: root
   become_method: sudo
-  register: gohu
 
 - name: Refresh Font Cache
   shell: "fc-cache -f -v"
   become: yes
   become_user: root
   become_method: sudo
-  when: not gohu.skipped and gohu.changed
 
 - name: Create Arduino IDE Install Directory
   file:
@@ -214,12 +151,3 @@
   become: yes
   become_user: root
   become_method: sudo
-
-- name: Install Services
-  template: src={{ item }}.service.j2 dest=/etc/systemd/system/{{ item }}.service
-  become: yes
-  become_user: root
-  become_method: sudo
-  with_items:
-      - suspend_prevent
-

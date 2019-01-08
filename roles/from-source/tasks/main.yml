@@ -41,15 +41,6 @@
     version: v4
     force: yes
 
-- name: Clone VAsim
-  git:
-    repo: 'git://github.com/jackwadden/VASim'
-    dest: '{{setupsoftware_dir}}/vasim'
-    update: yes
-    clone: yes
-    recursive: yes
-    force: yes
-
 - name: Clone qstats
   git:
       repo: 'git://github.com/tonyfischetti/qstats.git'
@@ -64,6 +55,15 @@
   git:
       repo: 'git://github.com/charlesdaniels/st.git'
       dest: '{{setupsoftware_dir}}/st'
+      update: yes
+      clone: yes
+      recursive: yes
+      force: yes
+
+- name: Clone cwm
+  git:
+      repo: 'git://github.com/chneukirchen/cwm.git'
+      dest: '{{setupsoftware_dir}}/cwm'
       update: yes
       clone: yes
       recursive: yes
@@ -104,11 +104,28 @@
     chdir: '{{setupsoftware_dir}}/qstats'
   changed_when: false
 
-- name: Build vasim
-  shell: "make CC=g++"
+- name: cwm dependancies
+  apt: pkg={{ item }} state=latest
+  with_items:
+      - libxrandr-dev
+  become: yes
+  become_user: root
+  become_method: sudo
+
+- name: Build cwm
+  command: make
   args:
-    chdir: '{{setupsoftware_dir}}/vasim'
+    chdir: '{{setupsoftware_dir}}/cwm'
   changed_when: false
+
+# st will not use gohufont if this file is present
+- name: Delete 70-no-bitmaps
+  file:
+      path: /etc/fonts/conf.d/70-no-bitmaps.conf
+      state: absent
+  become: yes
+  become_user: root
+  become_method: sudo
 
 - name: Build st
   command: make
@@ -134,21 +151,20 @@
   become_user: root
   become_method: sudo
 
-- name: Install vasim
-  copy:
-      remote_src: yes
-      src: '{{setupsoftware_dir}}/vasim/vasim'
-      dest: '/usr/local/bin/vasim'
-      mode: 755
-  become: yes
-  become_user: root
-  become_method: sudo
-
 - name: Install st
   command: make install
   args:
     chdir: '{{setupsoftware_dir}}/st'
     creates: /usr/local/bin/pcalc
+  become: yes
+  become_user: root
+  become_method: sudo
+
+- name: Install cwm
+  command: make install
+  args:
+    chdir: '{{setupsoftware_dir}}/cwm'
+    creates: /usr/local/bin/cwm
   become: yes
   become_user: root
   become_method: sudo

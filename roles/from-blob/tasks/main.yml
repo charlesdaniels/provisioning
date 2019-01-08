@@ -18,23 +18,16 @@
   become_user: root
   become_method: sudo
 
-- name: Install ripgrep
-  apt:
-      deb: "https://github.com/BurntSushi/ripgrep/releases/download/0.9.0/ripgrep_0.9.0_amd64.deb"
-  become: yes
-  become_user: root
-  become_method: sudo
-
 - name: Install fd-find
   apt:
-      deb: "https://github.com/sharkdp/fd/releases/download/v7.0.0/fd_7.0.0_amd64.deb"
+      deb: "https://github.com/sharkdp/fd/releases/download/v7.2.0/fd_7.2.0_amd64.deb"
   become: yes
   become_user: root
   become_method: sudo
 
 - name: Extract tin-summer
   unarchive:
-      src: "https://github.com/vmchale/tin-summer/releases/download/1.21.5/tin-summer-1.21.5-x86_64-unknown-linux-gnu.tar.gz"
+      src: "https://github.com/vmchale/tin-summer/releases/download/1.21.8/tin-summer-1.21.8-x86_64-unknown-linux-gnu.tar.gz"
       dest: "{{setupsoftware_dir}}/"
       creates: "{{setupsoftware_dir}}/sn"
       remote_src: true
@@ -44,13 +37,6 @@
       src: "{{setupsoftware_dir}}/sn"
       dest: "/usr/local/bin/sn"
       mode: 751
-  become: yes
-  become_user: root
-  become_method: sudo
-
-- name: Install tokei
-  apt:
-      deb: "https://github.com/Aaronepower/tokei/releases/download/v6.0.0/tokei-v6.0.0-x86_64-unknown-linux-gnu.deb"
   become: yes
   become_user: root
   become_method: sudo
