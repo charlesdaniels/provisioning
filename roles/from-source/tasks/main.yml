@@ -62,7 +62,7 @@
 
 - name: Clone cwm
   git:
-      repo: 'git://github.com/chneukirchen/cwm.git'
+      repo: 'https://git.sr.ht/~charles/cwm'
       dest: '{{setupsoftware_dir}}/cwm'
       update: yes
       clone: yes
