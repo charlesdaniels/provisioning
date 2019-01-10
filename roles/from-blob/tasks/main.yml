@@ -25,12 +25,45 @@
   become_user: root
   become_method: sudo
 
+- name: Install ripgrep
+  apt:
+      deb: "https://github.com/BurntSushi/ripgrep/releases/download/0.10.0/ripgrep_0.10.0_amd64.deb"
+  become: yes
+  become_user: root
+  become_method: sudo
+
 - name: Extract tin-summer
   unarchive:
       src: "https://github.com/vmchale/tin-summer/releases/download/1.21.8/tin-summer-1.21.8-x86_64-unknown-linux-gnu.tar.gz"
       dest: "{{setupsoftware_dir}}/"
       creates: "{{setupsoftware_dir}}/sn"
       remote_src: true
+
+- name: Install tokei
+  unarchive:
+      src: "https://github.com/Aaronepower/tokei/releases/download/v8.0.1/tokei-v8.0.1-x86_64-unknown-linux-gnu.tar.gz"
+      dest: /usr/local/bin/
+      remote_src: true
+  creates: /usr/local/bin/tokei
+  become: yes
+  become_user: root
+  become_method: sudo
+
+- name: Install hexyl
+  apt:
+      deb: "https://github.com/sharkdp/hexyl/releases/download/v0.3.1/hexyl_0.3.1_amd64.deb"
+  become: yes
+  become_user: root
+  become_method: sudo
+
+- name: Install insect
+  get_url:
+      url: "https://github.com/sharkdp/insect/releases/download/v5.0.0/insect-linux-x64"
+      dest: /usr/local/bin/insect
+      mode: 0755
+  become: yes
+  become_user: root
+  become_method: sudo
 
 - name: Install tin-summer
   copy:

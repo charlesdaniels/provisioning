@@ -46,6 +46,7 @@
       - remmina-plugin-rdp
       - remmina-plugin-vnc
       - scrot
+      - stalonetray
       - steam
       - system-config-printer
       - vim-gtk3
