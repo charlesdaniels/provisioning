@@ -169,3 +169,13 @@
   become: yes
   become_user: root
   become_method: sudo
+
+- name: Install lsdesktopf
+  get_url:
+      dest: /usr/local/bin/lsdesktopf
+      url: "https://raw.githubusercontent.com/AndyCrowd/list-desktop-files/master/lsdesktopf"
+      mode: 0755
+  become: yes
+  become_user: root
+  become_method: sudo
+
