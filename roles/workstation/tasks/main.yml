@@ -37,6 +37,7 @@
       - musique
       - network-manager
       - network-manager-gnome
+      - numlockx
       - pavucontrol
       - pinta
       - pulseaudio
@@ -49,6 +50,7 @@
       - system-config-printer
       - vim-gtk3
       - winetricks
+      - xautolock
       - xbacklight
       - xclip
       - xfburn
