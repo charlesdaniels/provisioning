@@ -64,6 +64,7 @@
   git:
       repo: 'https://git.sr.ht/~charles/cwm'
       dest: '{{setupsoftware_dir}}/cwm'
+      version: linux
       update: yes
       clone: yes
       recursive: yes
