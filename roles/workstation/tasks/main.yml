@@ -57,6 +57,8 @@
       - xbacklight
       - xclip
       - xfburn
+      - xdotool
+      - xkbset
 
   become: yes
   become_user: root

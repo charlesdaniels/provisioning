@@ -125,6 +125,7 @@
       - upower
       - upx-ucl
       - youtube-dl
+      - virtualenv
       - zsh
   become: yes
   become_user: root
