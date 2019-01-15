@@ -22,6 +22,8 @@
       - calibre
       - compton
       - dbus
+      - dconf-editor
+      - dconf-cli
       - engrampa
       - evolution
       - feh
@@ -160,3 +162,24 @@
   become: yes
   become_user: root
   become_method: sudo
+
+- name: Disable systemd-networkd-wait-online.service
+  command: systemctl disable systemd-networkd-wait-online.service
+  become: yes
+  become_user: root
+  become_method: sudo
+
+- name: Mask systemd-networkd-wait-online.service
+  command: systemctl mask systemd-networkd-wait-online.service
+  become: yes
+  become_user: root
+  become_method: sudo
+
+- name: Apply dconf settings
+  command: "gsettings set {{item}}"
+  with_items:
+        - org.mate.power-manager notify-discharging false
+        - org.mate.power-manager action-critical-battery suspend
+        - org.mate.power-manager button-lid-battery suspend
+        - org.mate.power-manager button-suspend suspend
+
