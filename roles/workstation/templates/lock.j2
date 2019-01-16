@@ -1,0 +1,8 @@
+#!/bin/sh
+
+case $1/$2 in
+	post/*)
+		LOCK_USER="$(ps aux | grep xautolock | grep -v grep | cut -d' ' -f 1)"
+		DISPLAY=:0 sudo -u "$LOCK_USER" xautolock -locknow
+		;;
+esac

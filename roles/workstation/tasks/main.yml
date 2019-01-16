@@ -35,7 +35,6 @@
       - keepassxc
       - libreoffice
       - mate-control-center
-      - mate-screensaver
       - mate-settings-daemon
       - mpv
       - musique
@@ -56,6 +55,7 @@
       - vim-gtk3
       - winetricks
       - xautolock
+      - xtrlock
       - xbacklight
       - xclip
       - xfburn
@@ -175,11 +175,13 @@
   become_user: root
   become_method: sudo
 
-- name: Apply dconf settings
-  command: "gsettings set {{item}}"
-  with_items:
-        - org.mate.power-manager notify-discharging false
-        - org.mate.power-manager action-critical-battery suspend
-        - org.mate.power-manager button-lid-battery suspend
-        - org.mate.power-manager button-suspend suspend
-
+- name: install lock script
+  template:
+    src: lock.j2
+    dest: /lib/systemd/system-sleep/lock
+    owner: root
+    mode: 0755
+    group: root
+  become: yes
+  become_user: root
+  become_method: sudo
