@@ -56,6 +56,13 @@
   become_user: root
   become_method: sudo
 
+- name: Install Musique
+  apt:
+      deb: "https://flavio.tordini.org/files/musique/musique.deb"
+  become: yes
+  become_user: root
+  become_method: sudo
+
 - name: Install insect
   get_url:
       url: "https://github.com/sharkdp/insect/releases/download/v5.0.0/insect-linux-x64"
@@ -79,3 +86,4 @@
   args:
     warn: false
   changed_when: false
+
