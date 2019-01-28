@@ -80,6 +80,7 @@
       - htop
       - imagemagick
       - iotop
+      - libav-tools
       - libconfig-tiny-perl
       - libfile-path-expand-perl
       - libfilesys-df-perl
@@ -135,6 +136,8 @@
 - name: Libraries
   apt: pkg={{ item }} state=latest
   with_items:
+      - gstreamer1.0-libav
+      - libavcodec57
       - libboost1.62-dev
       - libbsd-dev
       - libfltk1.3
@@ -144,6 +147,7 @@
       - libfreetype6
       - libfreetype6-dev
       - libgit2-dev
+      - libncurses-dev
       - libsqlite3-dev
       - libssh2-1-dev
       - libssl-dev
