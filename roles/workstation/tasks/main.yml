@@ -53,6 +53,7 @@
       - system-config-printer
       - vim-gtk3
       - winetricks
+      - wmctrl
       - xautolock
       - xtrlock
       - xbacklight
